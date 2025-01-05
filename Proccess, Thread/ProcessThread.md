@@ -39,11 +39,11 @@ kernel mode: 운영체제의 커널 수행 (권한↑)
 
 아래는 시스템의 자원 할당에 대한 사진이다.
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image.png)
+<img width="1410" alt="image" src="https://github.com/user-attachments/assets/2dd75451-cd72-4075-bede-5f1cf471a5c3" />
 
 프로세스가 598개 존재함을 확인할 수 있는데, 프로세스들은 CPU 자원을 사이좋게 나눠 사용하고 있다.
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%201.png)
+<img width="271" alt="image 1" src="https://github.com/user-attachments/assets/7e24c1ca-b3fd-403b-8edd-e0f8dc3c868c" />
 
 그렇다면, 이렇게 수 많은 프로세스를 어떻게 적은 양의 CPU 코어로 관리할까?(내 컴퓨터의 코어는 8 Core이다.)
 
@@ -64,7 +64,7 @@ kernel mode: 운영체제의 커널 수행 (권한↑)
 
 ### Process LifeCycle
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%202.png)
+![image 2](https://github.com/user-attachments/assets/6563fa01-c916-4666-a7b7-1d7aef6a00d2)
 
 New는 시작, Exit는 종료이다. 나머지 세 가지 상태를 알아보자.
 
@@ -82,7 +82,7 @@ Process Control Block(PCB)을 활용
 
 프로세스가 생성될 때 운영체제는 PCB를 생성
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%203.png)
+![image 3](https://github.com/user-attachments/assets/4ad3d326-ea67-45a9-9754-8d6759dc6775)
 
 ### Context Switch
 
@@ -144,7 +144,7 @@ Process Control Block(PCB)을 활용
 
 ### Process, Thread Memory
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%204.png)
+![image 4](https://github.com/user-attachments/assets/b5491b62-a15c-47b8-90d1-df2a4a8c91bf)
 
 위 사진에서 알 수 있듯이 프로세스는 각각의 자원이 독립적이다.
 
@@ -168,7 +168,7 @@ Stack은 다들 알다싶이 함수 호출 시 전달되는 인자, 되돌아갈
 
 즉, Stack 영역을 독립적으로 가짐으로써 스레드는 독립적인 실행 흐름을 가질 수 있게 되는 것이다.
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%205.png)
+![image 5](https://github.com/user-attachments/assets/ecec243d-c634-4988-b07d-fd1da270db51)
 
 위 사진은 프로세스의 메모리구조다.
 
@@ -186,12 +186,12 @@ Stack은 다들 알다싶이 함수 호출 시 전달되는 인자, 되돌아갈
 
 multi tasking: 단일 Core에서 번갈아가며 여러 작업을 처리하는 것
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%206.png)
+![image 6](https://github.com/user-attachments/assets/d474eb2b-c627-4fb7-8f09-587a781e242f)
 
 multi processing: 여러개의 Core가 여러 작업을 병렬로 처리하는 것
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%207.png)
+![image 7](https://github.com/user-attachments/assets/36644282-c4c6-4794-932e-285e5a434b64)
 
 multi tasking + multi processing
 
-![image.png](Process%20Thread%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201725e7a35f44807f962cfacf13cb56db/image%208.png)
+![image 8](https://github.com/user-attachments/assets/d9a75265-4527-42d6-83a3-b0afd5f18fbf)
