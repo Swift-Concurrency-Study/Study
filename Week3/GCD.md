@@ -287,7 +287,7 @@ DispatchQueue.global().async {
 
 `DispatchWorkItem` 은 지금껏 클로저로 보내왔던 **작업이 캡슐화 된 class** 이다.
 
-![GCD%201825e7a35f4480afb744c6a03ae953c3/image%203.png](GCD%201825e7a35f4480afb744c6a03ae953c3/image%203.png)
+![image-11](https://github.com/user-attachments/assets/37a991c8-1e50-4597-b4c1-ffa76f22168f)
 
 아래 예시 코드를 보면 알 수 있듯 `DispatchWorkItem`을 생성할 때 `qos` 파라미터를 통해 작업의 우선순위도 설정할 수 있다.
 
