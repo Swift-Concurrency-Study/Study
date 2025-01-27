@@ -821,6 +821,7 @@ Heap에 Continuation으로 저장하면 Stack에서 제거한다.
 요롷게!
 
 ---
+# Reference
 
 https://sujinnaljin.medium.com/swift-async-await-concurrency-bd7bcf34e26f
 
