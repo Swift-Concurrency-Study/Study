@@ -16,7 +16,8 @@ GCD와 비교하며 왜 등장하게 되었는지 살펴보겠다.
 
 ### 가독성
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image.png)
+<img width="542" alt="image" src="https://github.com/user-attachments/assets/10a019ef-e09b-42fd-ad55-c2e96a26d13c" />
+
 
 기존의 GCD는 비동기 작업이 끝났는 지의 여부를 Completion Closure를 통해 알려준다.
 
@@ -24,7 +25,8 @@ GCD와 비교하며 왜 등장하게 되었는지 살펴보겠다.
 
 반면 Swift Concurrency는 아래와 같이 동작한다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%201.png)
+<img width="552" alt="image 1" src="https://github.com/user-attachments/assets/6ed1c6d2-4f61-48ed-b836-b8037657cd32" />
+
 
 위 사진들의 코드는 동일한 로직인 것.
 
@@ -36,7 +38,8 @@ URLSession을 통해서 이미지를 다운 받는 메소드가 있다고 하자
 
 이미지 내려받는 걸 실패했을 때 예외처리하는 상황으로 둘을 비교해보겠다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%202.png)
+<img width="555" alt="image 2" src="https://github.com/user-attachments/assets/125767ce-3f46-48d6-8614-894489e59339" />
+
 
 GCD는 이미지를 성공적으로 내려받으면 컴플리션 핸들러의 첫 번째 파라미터로 이미지를 넘겨준다.
 
@@ -48,7 +51,8 @@ GCD는 이미지를 성공적으로 내려받으면 컴플리션 핸들러의 �
 
 추가로, Result를 쓰면 가독성은 더 심각해짐
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%203.png)
+<img width="741" alt="image 3" src="https://github.com/user-attachments/assets/dc6df136-be69-491d-9797-5dd3c98d47bb" />
+
 
 그래서 Swift Concurrency에서는 컴플리션 핸들러를 사용하지 않는다.
 
@@ -79,7 +83,7 @@ await로 중단되었을 때 CPU가 컨텍스트로 스위칭하는 게 아니�
 
 이러면 컨텍스트 스위칭으로 할 작업들을 같은 스레드에서 함수로 호출하니까 비용이 발생하지 않음
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%204.png)
+<img width="737" alt="image 4" src="https://github.com/user-attachments/assets/86958565-d0c4-4bd8-8176-b98a2cafcc08" />
 
 Swift Concurrency에서는 Actor가 Thread를 재활용하고,
 
@@ -101,13 +105,15 @@ Background QoS인 작업이 큐에 추가되고, User Initiated 작업이 추가
 
 Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우선순위 작업이 들어오면 해당 작업 먼저 수행시킬 수 있다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%205.png)
+<img width="718" alt="image 5" src="https://github.com/user-attachments/assets/08fddff9-3fdc-4bd6-a848-4b5b83d3955c" />
+
 
 ## CompletionHandler → Async/await
 
 서버에서 이미지 리스트를 불러오고 이미지에 대한 썸네일을 화면에 보여주는 과정이 있다고 해보자. 서버에서 가져온 정보를 `UIImage`로 변환하는 과정에는 아래와 같은 일련의 과정이 필요하다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%206.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%206.png)
+<img width="451" alt="image 6" src="https://github.com/user-attachments/assets/fa92c7b0-3fe3-41fc-82dc-dcc2cf6b6fcf" />
+
 
 해당 과정을 살펴보면 하위 과정이 실행되기 위해서는 상위 과정에 대한 결과값이 필요하다. 즉, 위 과정들은 모두 차례대로 진행되어야함을 의미한다.
 
@@ -117,27 +123,30 @@ Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우�
 
 그럼 위 과정을 이제 기존의 `completionHandler`를 통한 비동기 처리 방식으로 코드를 짜보자.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%207.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%207.png)
+<img width="621" alt="image 7" src="https://github.com/user-attachments/assets/f8c93e43-3a5b-4c3f-86ea-c72607c7a84d" />
+
 
 먼저 `thumbnailURLRequest(for:)` 메소드를 호출한다. 위에서 말했듯 이 함수는 동기적으로 호출되는 함수이기 때문에 빠르게 처리가 된다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%208.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%208.png)
+<img width="609" alt="image 8" src="https://github.com/user-attachments/assets/dcd6196f-d1a7-4a23-b1f0-bf8475d7068f" />
 
 이후 `URLSessionDataTask` 를 동기적으로 만들고 비동기 작업을 시작하기 위해 따로 `task.resume()` 를 호출해야한다.
 
 데이터를 다운로드 받는 것은 시간이 걸리는 작업이며, 그 동안 스레드가 block되지 않게 하기 위해서는 위와 같이 비동기 작업으로 처리해주는 것이 매!우! 중요하다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%209.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%209.png)
+<img width="612" alt="image 9" src="https://github.com/user-attachments/assets/6713c76e-e798-4eb8-954e-a333dda0b4b3" />
+
 
 다운로드 요청이 완료되면 completionHandler를 통해 data, response, error 값들이 옵셔널하게 도착한다.
 
 만약 error가 발생했다면, completionHandler를 호출하여 에러 처리를 해줘야한다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2010.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2010.png)
+<img width="611" alt="image 10" src="https://github.com/user-attachments/assets/249b73c7-d330-4b64-b708-86f478cdd2d1" />
+
 
 값이 잘 도착했다면, `UIImage(data:)` 를 호출하여 동기적으로 데이터를 `UIImage`로 변환시켜준다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2011.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2011.png)
+<img width="615" alt="image 11" src="https://github.com/user-attachments/assets/6323969c-8ad6-4ecd-9c0a-ce871241b9e8" />
 
 이미지가 잘 생성이 되었다면, 우리는 `prepareThumbnail` 메소드를 호출하고 또 completionHandler를 통해 값을 전달한다. 해당 과정이 이루어지는 동안 스레드는 unblocked되고 다른 작업을 할 수 있게 된다.
 
@@ -145,11 +154,13 @@ Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우�
 
 노노 .ᐟ.ᐟ
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2012.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2012.png)
+<img width="636" alt="image 12" src="https://github.com/user-attachments/assets/4c6c71ae-97ad-4318-98bf-1ac4cb76ff13" />
+
 
 위 `guard-let` 구문을 보면 에러에 대한 처리 없이 그냥 함수를 종료시켜버린다 ! 따라서 UIImage를 생성하거나 썸네일을 생성하는데 실패했더라도, `fetchThumbnail` 의 호출부는 이를 알 수 없고, 이미지는 영영 업데이트 되지 않게된다..
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2013.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2013.png)
+<img width="543" alt="image 13" src="https://github.com/user-attachments/assets/fa331428-5453-4cb1-9005-1c989cc9d4bc" />
+
 
 이를 해결하기 위해선 모든 함수 return 경로에 error를 담은 completion을 호출해야한다.. 여기선 Swift의 기본 에러 핸들링 메커니즘을 사용할 수 없는 것이다. (error throw하는거 못 함;)
 
@@ -159,23 +170,23 @@ Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우�
 
 이걸 아 ~ 주 조금은 안전하게 만들 수 있다. 바로 Result 타입을 활용하는 방식이다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2014.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2014.png)
+<img width="611" alt="image 14" src="https://github.com/user-attachments/assets/5315bffd-3959-4d4e-8b02-75b02414959b" />
 
 음.. 근데 그냥 코드가 조금 더 길어지고 못생겨짐..
 
 자 ~ 그럼 이제 이 못나고 불안전한 코드를 async/await을 활용하여 리팩토링해보자 !
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2015.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2015.png)
+<img width="620" alt="image 15" src="https://github.com/user-attachments/assets/06955a33-c976-4c72-bf7a-68e91b18ad5e" />
 
 먼저 함수를 작성할 때, `throws` 키워드 전에 `async` 키워드를 붙여준다. 에러를 던지지 않는 함수라면 그냥 화살표 전에 `async`를 붙여주면 된다.
 
 그럼 이제 깔꼼하게 `fetchThumbnail` 함수는 UIImage를 반환하고, 에러가 발생하면 throw를 할 수 있게 되었다 !
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2016.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2016.png)
+<img width="619" alt="image 16" src="https://github.com/user-attachments/assets/97d121b8-e206-48f7-9b39-3f85cdfa0ad6" />
 
 맨 처음 `fetchThumbnail` 이 호출되면, 이 전과 같이 `thumbnailURLRequest` 를 호출한다. 이 함수는 동기함수로, 해당 작업을 하는 동안은 스레드가 block 된다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2017.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2017.png)
+<img width="615" alt="image 17" src="https://github.com/user-attachments/assets/8f1c972d-1d6c-422e-a434-5175eadd293a" />
 
 다음으론 `data(for:)` 메소드를 호출하여 데이터를 다운받기 시작한다. `data(for:)` 메소드는 `dataTask` 와 같이 Foundation에서 제공하는 메소드로, 비동기적으로 처리된다. 하지만 `dataTask`와는 달리, `data(for:)` 메소드는 **awaitable**하다. 해당 함수가 호출되면, 빠르게 중단되고, 스레드는 unblocked 되며 다른 작업을 할 수 있게 된다.
 
@@ -183,7 +194,7 @@ Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우�
 
 `dataTask`와 `data` 두 버전 모두 값과 에러에 대한 처리를 제공하고 있다. 하지만 awaitable 버전은 훨씬훨씬 코드가 간단해진 것을 확인할 수 있다 !
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2018.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2018.png)
+<img width="615" alt="image 18" src="https://github.com/user-attachments/assets/f876637c-f7ac-4f62-898b-8f5610f3c273" />
 
 이후 데이터를 `UIImage`로 변환시키고 thumbnail 프로퍼티에 접근하면 썸네일이 렌더링되기 시작한다. 썸네일이 생성되기 시작하면, 스레드는 또 다시 unblocked 되며 다른 작업을 할 수 있게 된다. 그리고 썸네일이 잘 생성되었다면 그걸 반환하고, 실패했다면 error를 throw하게 된다.
 
@@ -195,7 +206,7 @@ Task에 priority를 부여해서 앞에 작업이 쌓여있더라도 높은 우�
 
 저 `thumbnail`이라는 프로퍼티는 기본제공이 아니고 따로 만든 프로퍼티인데 그 코드를 살펴보자.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2019.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2019.png)
+<img width="644" alt="image 19" src="https://github.com/user-attachments/assets/120fad08-5a78-4109-8f52-fc434348fb23" />
 
 UIImage의 extension에 구현해줬는데, 구현부는 굉장히 짧다. thumbnail 프로퍼티는 CGSize를 만들고 `byPreparingThumbnail(ofSize:)` 의 결과를 기다린다.
 
@@ -207,7 +218,7 @@ UIImage의 extension에 구현해줬는데, 구현부는 굉장히 짧다. thumb
 
 함수나 프로퍼티, 이니셜라이저에서 `await` 키워드는 함수가 어디서 스레드를 unblock할 것인지를 나타낸다. `await` 키워드는 다른 곳에서도 사용될 수 있다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2020.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2020.png)
+<img width="627" alt="image 20" src="https://github.com/user-attachments/assets/1528e7b6-5f43-490c-ae39-3416de449db1" />
 
 `async` 시퀀스를 반복하기위한 반복문에서 위와 같이 사용할 수 있다. 비동기 시퀀스는 각각의 요소들을 비동기적으로 제공한다는 점을 제외하고는 일반 시퀀스와 같다. 따라서 다음 요소를 가져오기 위해선 `await` 키워드가 붙어야하며, 이는 해당 요소가 `async`임을 나타낸다.
 
@@ -217,7 +228,7 @@ UIImage의 extension에 구현해줬는데, 구현부는 굉장히 짧다. thumb
 
 await로 비동기 메소드를 호출하는 경우, Potential Suspension Point로 지정된다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2021.png)
+<img width="664" alt="image 21" src="https://github.com/user-attachments/assets/4e2a1e88-4d29-488d-b7c5-51a29e872670" />
 
 생각해보면 당연하다
 
@@ -241,7 +252,7 @@ A 함수에서 B라는 sync 동기 함수를 호출하면, A 함수가 실행되
 
 A 함수는 동기적으로 호출했기 때문에 B가 끝날 때까지 아무것도 하지 못 한다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2022.png)
+<img width="667" alt="image 22" src="https://github.com/user-attachments/assets/6a9516bd-dd69-4bc8-8fe9-d8d5ab4caf61" />
 
 따라서 하나의 스레드에서 A가 동작하다가 B 작업을 하고, B가 끝나면 A 작업으로 다시 돌아온다.
 
@@ -253,7 +264,7 @@ A 함수는 동기적으로 호출했기 때문에 B가 끝날 때까지 아무�
 
 왜냐하면 A 작업은 어차피 B를 호출한 시점부터 그 아래 코드들은 B가 끝날 때까지 아무것도 못 하기 때문이다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2023.png)
+<img width="665" alt="image 23" src="https://github.com/user-attachments/assets/3e135760-8290-4c9f-91a3-79f3b49103c3" />
 
 그러면 Suspension Point를 만난 순간부터 스레드 제어권을 포기하면,
 
@@ -284,7 +295,7 @@ await한다고 **무조건** Suspension Point가 되는 건 아니지만,
 
 모든 스레드는 함수 호출을 위한 자신만의 독립된 스택 영역을 갖는다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2024.png)
+<img width="669" alt="image 24" src="https://github.com/user-attachments/assets/56cf48ad-b25f-4cb9-a3f4-4ae5ab56803f" />
 
 스레드가 함수 호출을 실행하면 새 프레임이 스택에 푸쉬,
 
@@ -294,7 +305,7 @@ await한다고 **무조건** Suspension Point가 되는 건 아니지만,
 
 ## async 방식의 Stack Frame
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2025.png)
+<img width="656" alt="image 25" src="https://github.com/user-attachments/assets/1299619e-58cb-40f2-842f-910202c9752c" />
 
 1. 비동기 메소드인 `updateDatabase`를 호출
 2. `updateDatabase` 내에서 비동기 메소드인 `add` 호출
@@ -322,7 +333,7 @@ Flow는 위와 같다.
 
 **Suspension Point를 만나서 다른 스레드로 작업을 이어갈 때,** 이 전 내용들을 기억하기 위해 **Heap 메모리 영역에 저장**한다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2026.png)
+<img width="676" alt="image 26" src="https://github.com/user-attachments/assets/95e42429-b473-4e83-9d48-1ab3373b866a" />
 
 위와 같이 말이다.
 
@@ -346,13 +357,13 @@ Suspension Point에서 모든 정보가 Heap에 저장되니, 다시 점유권�
 
 이 async 프레임 목록은 Continuation에 대한 런타임의 표현이다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2027.png)
+<img width="677" alt="image 27" src="https://github.com/user-attachments/assets/5c93d5bd-6b9b-4303-89a3-99ee26955f9e" />
 
 따라서 3번이 끝나면, 위 사진처럼 save 스택 프레임이 add 스택 프레임을 대체하게 된다. 
 
 ### save 메소드 동작 중 await
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2028.png)
+<img width="671" alt="image 28" src="https://github.com/user-attachments/assets/838132e9-6c84-4cd0-a6d9-5e1390b7d42a" />
 
 save 메소드 내부에서 만약 await로 비동기 메소드를 호출해서 Suspend가 되었다고 가정하겠다.
 
@@ -364,7 +375,7 @@ save 메소드가 동작할 차례가 되어 continuation에 의해 Heap에 있�
 
 save 메소드 수행 후 작업을 마치면 [ID]를 반환한다.
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2029.png)
+<img width="680" alt="image 29" src="https://github.com/user-attachments/assets/7d39f093-5f73-44f2-b606-6488c5d21fa0" />
 
 save 메소드의 동작이 끝나면 [ID]를 반환하고, save를 위한 스택 프레임은 add 메소드를 위한 스택 프레임으로 대체된다.
 
@@ -390,7 +401,7 @@ func fetchOneThumbnail(withID id: String) async throws -> UIImage {
 
 왜냐하면 언제 작업이 끝날지 모르기 때문임!
 
-![스크린샷 2025-01-24 오후 8.47.07.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2025-01-24_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_8.47.07.png)
+<img width="1684" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2025-01-24_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8 47 07" src="https://github.com/user-attachments/assets/6044ab34-5272-4793-9fbf-aecc52563f5a" />
 
 이 경우 Swift는 자식 작업을 생성한 후 빈 값을 변수에 넣고 계속 진행시킨다.
 
@@ -412,7 +423,7 @@ class A {
 
 ### async-let 예제
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2030.png)
+<img width="432" alt="image 30" src="https://github.com/user-attachments/assets/90d5e428-c13e-4da9-ad50-cb0fed73a213" />
 
 두 가지 다른 URL로부터 데이터를 다운로드하는 예제가 있다.
 
@@ -428,17 +439,17 @@ class A {
 
 async-let 도입
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2031.png)
+<img width="501" alt="image 31" src="https://github.com/user-attachments/assets/80b921b2-2a64-4811-8b6b-c25a79e5f2a1" />
 
 두 다운로드가 동시에 이루어질 수 있게 async-let을 사용하여 동시 바인딩을 한다.
 
 이러면 Child Task에서 작업이 발생하기 때문에 try await을 사용하지 않아도 됨
 
-![image.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2032.png)
+<img width="497" alt="image 32" src="https://github.com/user-attachments/assets/871226b1-b57a-4132-aa00-b23370af42cd" />
 
 이제 아래 블록들에서 data와 metadata 변수를 사용하기 전에 try await을 한다.
 
-![스크린샷 2025-01-24 오후 8.57.52.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2025-01-24_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_8.57.52.png)
+<img width="1019" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2025-01-24_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8 57 52" src="https://github.com/user-attachments/assets/b73e663e-ecae-42b7-9ffc-93870c44ce18" />
 
 한 비동기 메소드에서 다른 비동기를 호출할 때마다 동일한 Task를 사용해서 호출한다.
 
@@ -637,7 +648,7 @@ continuation 인스턴스를 통해 yield메서드로 값을 반환하기만 하
 
 # 협력적 취소
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2033.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2033.png)
+<img width="1218" alt="image 33" src="https://github.com/user-attachments/assets/8a3fe6fe-0473-4f3d-925d-2b1f087a9d79" />
 
 취소면 취소지 뭔 협력적취소…?
 
@@ -756,13 +767,13 @@ Thread의 효율적인 사용이 문제인데, 이는 이전 CS 배울 때 다�
 
 이는 어떻게 반영되었을까?
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2034.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2034.png)
+<img width="1597" alt="image 34" src="https://github.com/user-attachments/assets/49c13619-4165-4800-a853-c2d3ad5db457" />
 
 기존 GCD환경에서는 위에서처럼 여러 Thread가 CPU자원을 번갈아 가면서 사용되었다.
 
 이럴 때 Thread가 많아지면 많아질수록 스케줄링이나 lock과 관련해서 대기 시간이 길어질 수 있었다.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2035.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2035.png)
+<img width="1597" alt="image 35" src="https://github.com/user-attachments/assets/cea7b50c-08b8-4e25-830d-d56c9edecb74" />
 
 하지만, SwiftConcurrency에서는 CPU당 Thread를 하나씩 할당한다.
 
@@ -772,7 +783,7 @@ Thread의 효율적인 사용이 문제인데, 이는 이전 CS 배울 때 다�
 
 실제 비동기 함수를 실행할 때를 살펴보자.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2036.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2036.png)
+<img width="1355" alt="image 36" src="https://github.com/user-attachments/assets/bedeb6ce-22de-4a93-a561-6db8fc4e5b0d" />
 
 비동기 함수를 실행할 때 우리는 await을 붙이고 호출한다.
 
@@ -780,7 +791,7 @@ Thread의 효율적인 사용이 문제인데, 이는 이전 CS 배울 때 다�
 
 좀 더 자세히 보자.
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2037.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2037.png)
+<img width="1506" alt="image 37" src="https://github.com/user-attachments/assets/779c79d2-70c3-4855-be71-30dcdfa8d784" />
 
 Stack과 Heap이 나온다.
 
@@ -801,11 +812,11 @@ Heap에 Continuation으로 저장하면 Stack에서 제거한다.
 
 왜냐하면 Queue (선입선출)이기 때문!
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2038.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2038.png)
+<img width="1597" alt="image 38" src="https://github.com/user-attachments/assets/ebe117e7-1cb7-4ad0-b77f-9069f83854ce" />
 
 하지만 SwiftConcurrency에서는 Heap에 보관된 Continuation에서 취사선택하면 되므로 우선순위가 높은 것을 먼저 실행 가능하다!
 
-![swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2039.png](swift%20concurrency%20%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%85%E1%85%B5%201875e7a35f4480369af4ff85dae746e2/image%2039.png)
+<img width="1597" alt="image 39" src="https://github.com/user-attachments/assets/ef9af320-54a0-4492-9257-dd289da4d651" />
 
 요롷게!
 
