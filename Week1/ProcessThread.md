@@ -1,25 +1,23 @@
-# Process Thread 정리
+# 목차
 
-## 목차
+- [운영체제는 왜 등장했을까?](#운영체제는-왜-등장했을까)
+- [System Call](#system-call)
+- [Process](#process)
+- [Process 생성과정](#process-생성-과정)
+- [Process LifeCycle](#process-lifecycle)
+- [PCB](#pcb)
+- [Context Switch](#context-switch)
+- [Thread](#thread)
+- [Process, Thread Memory](#process-thread-memory)
+- [multi tasking, multi processing](#multi-tasking-multi-processing)
 
-1. [운영체제는 왜 등장했을까?](#운영체제는-왜-등장했을까)
-2. [System Call](#system-call)
-3. [Process](#process)
-4. [Process 생성과정](#process-생성-과정)
-5. [Process LifeCycle](#process-lifecycle)
-6. [PCB](#pcb)
-7. [Context Switch](#context-switch)
-8. [Thread](#thread)
-9. [Process, Thread Memory](#process-thread-memory)
-10. [multi tasking, multi processing](#multi-tasking-multi-processing)
-
-### 운영체제는 왜 등장했을까?
+# 운영체제는 왜 등장했을까?
 
 ‘이렇게 비싼 컴퓨터를 어떻게 효율적으로 활용할까?’, ‘컴퓨터가 입출력하는 동안 다른 프로그램을 실행하면 좋지 않을까?’ 라는 생각에 컴퓨터를 운영해주는 프로그램인 운영체제를 떠올렸다.
 
 즉, 운영체제는 컴퓨터 운영의 효율성, 편리성 향상을 위해 등장했다.
 
-### System Call
+# System Call
 
 운영체제는 프로그램이며 입/출력 장치 등 하드웨어를 관리한다.
 
@@ -33,9 +31,7 @@ user mode: 사용자 프로그램들이 수행 (권한↓)
 
 kernel mode: 운영체제의 커널 수행 (권한↑)
 
----
-
-### Process
+# Process
 
 운영체제는 프로그램의 실행을 돕기 위해 등장했고 정말 중요한 건 프로그램의 실행이다.
 
@@ -62,7 +58,7 @@ kernel mode: 운영체제의 커널 수행 (권한↑)
 
 프로세스의 상태를 나누어 많은 프로세스들을 관리하게 되는데, 프로세스의 생성과정과 라이프사이클에 대해 알아보자
 
-### Process 생성 과정
+# Process 생성 과정
 
 1. 프로그램 코드를 메모리로 적재한다. - Load
    - 게으른 방식으로 필요할 때마다 가져옴
@@ -75,7 +71,7 @@ kernel mode: 운영체제의 커널 수행 (권한↑)
 5. 프로그램 시작점으로 분기하여 실행 시작
    - 주로 main()
 
-### Process LifeCycle
+# Process LifeCycle
 
 ![image 2](https://github.com/user-attachments/assets/6563fa01-c916-4666-a7b7-1d7aef6a00d2)
 
@@ -87,7 +83,7 @@ Running: 프로세스가 메모리에 올라가 CPU 자원을 할당 받은 상�
 
 Blocked: 대기 상태인데, 이 때는 프로세스가 메모리에서 내려와 Disk로 이동하기도 한다.
 
-### PCB
+# PCB
 
 그럼 프로세스의 상태에 대한 정보, 처리는 어떻게 할까?
 
@@ -97,7 +93,7 @@ Process Control Block(PCB)을 활용
 
 ![image 3](https://github.com/user-attachments/assets/4ad3d326-ea67-45a9-9754-8d6759dc6775)
 
-### Context Switch
+# Context Switch
 
 그렇다면 이제 실제 프로세스 간의 CPU 바톤 터치를 할때는 어떻게 할까?
 
@@ -135,9 +131,7 @@ Process Control Block(PCB)을 활용
 
 그래서 이것을 최소화하는 방향으로 스케쥴링 알고리즘과 멀티 스레딩 등 여러 기법들이 필요해진다.
 
----
-
-### Thread
+# Thread
 
 프로세스가 운영체제로부터 자원을 할당받고 스케쥴링된다면,
 스레드는 프로세스에 의해 관리되고 스케쥴링된다. (물론 이것도 운영체제 정책에 따라 달라질 수 있음)
@@ -155,7 +149,7 @@ Process Control Block(PCB)을 활용
 
 그렇다면 왜 스레드가 프로세스보다 더 빠를까? 메모리 구조를 통해 확인해보자.
 
-### Process, Thread Memory
+# Process, Thread Memory
 
 ![image 4](https://github.com/user-attachments/assets/b5491b62-a15c-47b8-90d1-df2a4a8c91bf)
 
@@ -193,7 +187,7 @@ Stack은 다들 알다싶이 함수 호출 시 전달되는 인자, 되돌아갈
 
 힙 영역: 주소값을 통해 힙 영역의 데이터에 접근하고 크기는 런타임에 결정. ARC에 의해 관리
 
-### multi tasking, multi processing
+# multi tasking, multi processing
 
 multi tasking: 단일 Core에서 번갈아가며 여러 작업을 처리하는 것
 
@@ -207,32 +201,20 @@ multi tasking + multi processing
 
 ![image 8](https://github.com/user-attachments/assets/d9a75265-4527-42d6-83a3-b0afd5f18fbf)
 
-### QNA
+# QNA
 
-1. 프로세스와 스레드의 차이점은 무엇이며, 각각의 메모리 구조는 어떻게 다른가요?
+-  프로세스와 스레드의 차이점은 무엇이며, 각각의 메모리 구조는 어떻게 다른가요?
 
-2. 컨텍스트 스위칭(Context Switching)이란 무엇이며, 어떤 상황에서 발생하나요?
-
-3. 스택(Stack)과 힙(Heap)의 차이점은 무엇이며, 각각의 메모리 할당 방식은 어떻게 다른가요?
-
-4. 프로그램과 프로세스의 차이에 대해 자원(CPU, Memory, Disk)의 관점에서 이야기해보세요
-
-5. 스레드가 무엇이고 왜 생겼는지 말해보세요.
-
-6. 멀티프로세스와 멀티스레드의 장, 단점에 대해 설명해주세요.
-
-7. 프로세스가 무엇인가? - PCB는 왜 필요한가요.
-
-8. 스레드와 프로세스의 장점/단점 비교
-
-9. 프로세스와 스레드의 차이를 메모리 관점에서 설명해주세요
-
-10. 멀티 태스킹과 멀티 프로세싱의 차이점을 설명해주세요
-
-11. iOS에서 어떻게 멀티 스레드를 구현할 수 있는지 설명해주세요
-
-12. Thread 사용하면서 불편했던 점이 있었나요?
-
-13. Thread 클래스가 아닌 GCD를 사용하는 이유는 무엇인가요?
-
-14. 스레드가 메모리를 공유함으로써 일어날 수 있는 문제점?
+-  컨텍스트 스위칭(Context Switching)이란 무엇이며, 어떤 상황에서 발생하나요?
+- 스택(Stack)과 힙(Heap)의 차이점은 무엇이며, 각각의 메모리 할당 방식은 어떻게 다른가요?
+- 프로그램과 프로세스의 차이에 대해 자원(CPU, Memory, Disk)의 관점에서 이야기해보세요
+- 스레드가 무엇이고 왜 생겼는지 말해보세요.
+- 멀티프로세스와 멀티스레드의 장, 단점에 대해 설명해주세요.
+- 프로세스가 무엇인가? - PCB는 왜 필요한가요.
+- 스레드와 프로세스의 장점/단점 비교
+- 프로세스와 스레드의 차이를 메모리 관점에서 설명해주세요
+- 멀티 태스킹과 멀티 프로세싱의 차이점을 설명해주세요
+- iOS에서 어떻게 멀티 스레드를 구현할 수 있는지 설명해주세요
+- Thread 사용하면서 불편했던 점이 있었나요?
+- Thread 클래스가 아닌 GCD를 사용하는 이유는 무엇인가요?
+- 스레드가 메모리를 공유함으로써 일어날 수 있는 문제점?

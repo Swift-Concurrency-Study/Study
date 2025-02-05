@@ -1,6 +1,20 @@
-# GCD
+# 목차
 
-### GCD(Grand Central Dispatch)
+- [GCD(Grand Central Dispatch)](#gcdgrand-central-dispatch)
+  - [DispatchQueue](#dispatchqueue)
+    - [SerialQueue](#serialqueue)
+    - [ConcurrentQueue](#concurrentqueue)
+    - [QoS (Quality of Service)](#qos-quality-of-service)
+    - [GCD 사용시 주의 사항 !](#gcd-사용시-주의-사항-)
+    - [main, global](#main-global)
+- [DispatchGroup](#dispatchgroup)
+- [DispatchWorkItem](#dispatchworkitem)
+  - [DispatchWorkItem 기능](#dispatchworkitem-기능)
+- [DispatchSemaphore](#dispatchsemaphore)
+- [DispatchBarrier](#dispatchbarrier)
+- [QNA](#qna)
+
+# GCD(Grand Central Dispatch)
 
 기존에는 개발자가 직접 스레드를 생성하고 작업(task)를 할당했다.
 
@@ -14,7 +28,7 @@
 
 GCD는 thread pool 패턴에 기반한 작업의 병렬 처리를 구현한 것이다.
 
-### DispatchQueue
+## DispatchQueue
 
 DispatchQueue 객체는 이를 실현하는 주된 방법이다.
 
@@ -242,7 +256,7 @@ main은 프로세스에서 하나만 존재하며, iOS에서는 UI를 담당한�
     Q1과 Q2는 순서가 유지되지만, 하나의 EQ라는 Queue에서 실행된다.
     이렇게 하면 Q1과 Q2간에 context switching을 줄이고 EQ하나로 통합할 수 있다.
 
-### DispatchGroup
+# DispatchGroup
 
 하나의 작업이 무거울 수 있다.
 
@@ -272,7 +286,7 @@ dispatchGroup.notify(queue: DispatchQueue.main) {
 
 이렇게 하면 작업이 끝났을 때 알림을 받고 안의 함수블럭을 실행한다.
 
-### DispatchWorkItem
+# DispatchWorkItem
 
 지금까지 큐에 작업을 넘길 때 클로저 안에 넣어서 처리했다.
 
@@ -310,7 +324,7 @@ DispatchQueue.global().async(execute: utilityItem)
 utilityItem.perform()
 ```
 
-### DispatchWorkItem 기능
+## DispatchWorkItem 기능
 
 `DispatchWorkItem`은 아래 두 가지 기능을 제공한다.
 
@@ -340,7 +354,7 @@ utilityItem.perform()
    itemA.notify(queue: DispatchQueue.global(), execute: itemB)
    ```
 
-### DispatchSemaphore
+# DispatchSemaphore
 
 `DispatchSemaphore`는 iOS에서 세마포어를 사용하기 위해 쓰이는 객체이다 .ᐟ.ᐟ
 
@@ -392,7 +406,7 @@ print("task A 완료 ~")
 
 ```
 
-### DispatchBarrier
+# DispatchBarrier
 
 **DispatchBarrier**는 *“concurrent dispatch queue에서 실행되고 있는 task들에 대한 동기화 지점”* 라고 공식문서에서 말한다.
 
@@ -406,28 +420,28 @@ dispatch queue의 인스턴스 메소드인 `async(group:qos:flags:execute:)` 
 concurrentQueue.async(flags: .barrier, execute: { })
 ```
 
-### 효준이가 헷갈렸던 것
-
-<img width="575" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-01-17%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%201 07 35" src="https://github.com/user-attachments/assets/c3fc1da7-5c79-468a-8d50-3831c9b9b4b8" />
-
-- 만약 프로세서가 1개라면 위 작업이 끝나면 `6+a`초 일까, `3+a` 초 일까?
+> ### 효준이가 헷갈렸던 것
+> 
+> <img width="575" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-01-17%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%201 07 35" src="https://github.com/user-attachments/assets/c3fc1da7-5c79-468a-8d50-3831c9b9b4b8" />
+> 
+> - 만약 프로세서가 1개라면 위 작업이 끝나면 `6+a`초 일까, `3+a` 초 일까?
   6 + a 초임
   결국 CPU는 한 번에 하나의 작업밖에 처리하지 못 하기 때문에 멀티 스레드로 돌려봤자 컨텍스트 스위칭하느라 6초에 a시간만큼 더 소요되는 것
   멀티코어 프로세서에서 멀티 스레드를 해야 효과가 있음
-- 그럼 단일 코어 프로세서에서 멀티 스레드를 하면 이점이 없나 ?
+> - 그럼 단일 코어 프로세서에서 멀티 스레드를 하면 이점이 없나 ?
   답은 No
   단일 코어여도 멀티스레드는 장점이 있음
   작업을 비동기적으로 처리할 수 있으므로 I/O 작업에서 이점을 얻을 수 있음
   I/O 요청하고 자기 할 일 하러 가면 되니까
 
-### QNA
+# QNA
 
-1. GCD에서 동기/비동기, 직렬/동시 큐에 대해 설명해주세요.
-2. GCD의 주요 구성 요소는 어떤 것들이 있나요.
-3. GCD에서 우선순위 역전을 방지하기 위해 어떻게 할까요.
-4. 동시성 프로그래밍은 무엇일까요.
-5. 병렬 프로그래밍과 동시성 프로그래밍의 차이점은?
-6. 동시성 프로그래밍을 하려면 코어나 프로세서를 사용하지 않고 어떻게 구현하나요?
-7. iOS에서 동시성 프로그래밍 방법은?
-8. GCD의 동작 원리에 대해 설명해주세요.
-9. GCD와 Operation Queue의 차이점은?
+- GCD에서 동기/비동기, 직렬/동시 큐에 대해 설명해주세요.
+- GCD의 주요 구성 요소는 어떤 것들이 있나요.
+- GCD에서 우선순위 역전을 방지하기 위해 어떻게 할까요.
+- 동시성 프로그래밍은 무엇일까요.
+- 병렬 프로그래밍과 동시성 프로그래밍의 차이점은?
+- 동시성 프로그래밍을 하려면 코어나 프로세서를 사용하지 않고 어떻게 구현하나요?
+- iOS에서 동시성 프로그래밍 방법은?
+- GCD의 동작 원리에 대해 설명해주세요.
+- GCD와 Operation Queue의 차이점은?
