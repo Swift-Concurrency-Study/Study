@@ -1,6 +1,35 @@
-# swift concurrency 정리
+# 목차
 
-# swift concurrency 등장 배경
+- [Swift Concurrency 등장 배경](#swift-concurrency-등장-배경)
+  - [가독성 & 에러처리 관점](#가독성--에러처리-관점)
+    - [가독성](#가독성)
+    - [에러 핸들링 안정성](#에러-핸들링-안정성)
+  - [성능적 관점](#성능적-관점)
+    - [스레드 관점](#스레드-관점)
+    - [우선순위 역전](#우선순위-역전)
+  - [CompletionHandler → Async/await](#completionhandler--asyncawait)
+- [스레드 제어권](#스레드-제어권)
+  - [스레드 제어권 관점](#스레드-제어권-관점)
+    - [sync 에서의 스레드 제어권](#sync-에서의-스레드-제어권)
+    - [async 에서의 스레드 제어권](#async-에서의-스레드-제어권)
+- [스택 프레임의 변화](#스택-프레임의-변화)
+  - [sync 방식의 Stack Frame](#async-방식의-stack-frame)
+  - [async 방식의 Stack Frame](#async-방식의-stack-frame)
+    - [add가 호출된 상황](#add가-호출된-상황)
+    - [await database.save가 호출된 경우](#await-databasesave가-호출된-경우)
+    - [save 메소드 종료 후 Return 과정](#save-메소드-종료-후-return-과정)
+- [async let](#async-let)
+  - [async-let 예제](#async-let-예제)
+- [Task](#task)
+- [Structured Concurrency](#structured-concurrency)
+- [Task Group](#task-group)
+- [AsyncSequence/Stream](#asyncsequencestream)
+- [협력적 취소](#협력적-취소)
+- [Continuation](#continuation)
+- [Swift Concurrency](#swift-concurrency)
+- [참고자료](#참고자료)
+
+# Swift Concurrency 등장 배경
 
 > swift concurrency란?
 WWDC 2021년에 소개된 동시성 프로그래밍 API
@@ -820,8 +849,7 @@ Heap에 Continuation으로 저장하면 Stack에서 제거한다.
 
 요롷게!
 
----
-# Reference
+# 참고자료
 
 https://sujinnaljin.medium.com/swift-async-await-concurrency-bd7bcf34e26f
 
