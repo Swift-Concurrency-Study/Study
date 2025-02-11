@@ -25,7 +25,7 @@ Copyable에 대해 본격적으로 알아보기 전에, Swift에서의 Copy라�
 
 ## 깊은 복사
 
-![image.png](./Images/image.png)
+<img src="./Images/image.png" width="70%">
 
 기본적으로 값타입인 struct, enum은 깊은 복사를 이용한다.
 
@@ -35,7 +35,7 @@ Copyable에 대해 본격적으로 알아보기 전에, Swift에서의 Copy라�
 
 ## 얕은 복사
 
-![image.png](./Images/image%201.png)
+<img src="./Images/image%201.png" width="70%">
 
 참조 타입인 class, actor에서 동작하는 방식이다.
 
@@ -68,13 +68,13 @@ class PlayerClass {
 }
 ```
 
-![image.png](./Images/image%202.png)
+<img src="./Images/image%202.png" width="70%">
 
 위 예제에서 메모리 관계를 보면, `var player2 = player1` 시점에서 `data.icon`의 **reference count가 2**인 것을 볼 수 있다.
 
 이는 참조만 복사하고 같은 인스턴스를 가리키는 얕은 복사가 발생했음을 알 수 있다.
 
-![image.png](./Images/image%203.png)
+<img src="./Images/image%203.png" width="70%">
 
 그러나 `PlayerClass` 객체를 복사하는 일이 발생할 때, 아래와 같이 `from` 매개변수가 있는 생성자를 사용하면 깊은 복사가 발생한다.
 
@@ -223,7 +223,7 @@ mutating(또는 inout)은 소비와 차용 둘 다 가능하지만 소비를 하
 
 ### 1. consume
 
-![image.png](./Images/image%204.png)
+<img src="./Images/image%204.png" width="60%">
 
 위의 코드가 있다고 하자.
 
@@ -231,7 +231,7 @@ mutating(또는 inout)은 소비와 차용 둘 다 가능하지만 소비를 하
 
 그러나 `newDisk` 메소드에서는 문제가 발생한다.
 
-![image.png](./Images/image%205.png)
+<img src="./Images/image%205.png" width="70%">
 
 newDisk 메소드에 있는 디스크 내용을 format 메소드 파라미터 disk에 넘겨주었기 때문이다.
 
@@ -241,13 +241,13 @@ newDisk 메소드에 있는 디스크 내용을 format 메소드 파라미터 di
 
 ### 2. borrow
 
-![image.png](./Images/image%206.png)
+<img src="./Images/image%206.png" width="60%">
 
 borrowing으로 등록된 변수는 **읽기 권한이 부여**된다. (= let 바인딩처럼)
 
 실제로 대부분의 모든 매개변수와 메소드는 이처럼 동작한다.
 
-![image.png](./Images/image%207.png)
+<img src="./Images/image%207.png" width="70%">
 
 그러나 차이점으로는 명시적 차용된 인수는 소비나 변경이 불가능하고, 복사만 할 수 있다는 점이다.
 
@@ -255,13 +255,13 @@ borrowing으로 등록된 변수는 **읽기 권한이 부여**된다. (= let �
 
 ### 3. inout (mutating)
 
-![image.png](./Images/image%208.png)
+<img src="./Images/image%208.png" width="60%">
 
 format 메소드 내에서 쓰기 접근 권한이 있기에 매개변수를 소비할 수 있다.
 
 단, **소비를 했다면** 함수가 종료되기 전 어느 시점에 inout 매개변수를 다시 초기화해야 한다.
 
-![image.png](./Images/image%209.png)
+<img src="./Images/image%209.png" width="70%">
 
 왜냐하면, 매개변수로 들어온 disk에 대한 소유권을 반환해야 하는데, 소비가 되어서 없어졌기 때문이다.
 
@@ -291,13 +291,13 @@ NonCopyable은 deinit을 구현할 수 있다.
 
 따라서 소멸 시기에 필요한 함수를 호출할 수 있다.
 
-![image.png](./Images/38a38e1c-e402-4403-97e3-4eb3dbbb61a3.png)
+<img src="./Images/38a38e1c-e402-4403-97e3-4eb3dbbb61a3.png" width="60%">
 
 - `discard` 연산을 사용하면 deinit을 호출하지 않고 인스턴스를 없앤다.
 
 # 프로토콜과 제네릭 활용
 
-![image.png](./Images/image%2010.png)
+<img src="./Images/image%2010.png" width="70%">
 
 대부분의 모든 타입은 기본적으로 Copyable을 따른다.
 
@@ -323,7 +323,7 @@ struct BankTransfer: ~Copyable {
 Swift에서 `Copyable`을 자동으로 **채택하지 않도록 억누른다**는 것이다.
 
 
-![image.png](./Images/image%2011.png)
+<img src="./Images/image%2011.png" width="70%">
 
 이상황을 위의 다이어그램으로 나타낼 수 있다.
 
@@ -337,13 +337,13 @@ Swift에서 `Copyable`을 자동으로 **채택하지 않도록 억누른다**�
 
 말로만 하면 와닿지 않을 수 있다. 그림으로 더 살펴보자.
 
-![스크린샷 2025-02-06 19.17.28.png](./Images/스크린샷_2025-02-06_19.17.28.png)
+<img src="./Images/스크린샷_2025-02-06_19.17.28.png" width="70%">
 
 `Runnable`이라는 프로토콜을 만들었다고 하자.
 
 기본적으로 `Copyable`을 준수하도록 설정된다.
 
-![스크린샷 2025-02-06 19.19.10.png](./Images/스크린샷_2025-02-06_19.19.10.png)
+<img src="./Images/스크린샷_2025-02-06_19.19.10.png" width="70%">
 
 만약, `~Copyable`이라고 하면 위와같이 표현할 수 있다.
 
@@ -351,11 +351,11 @@ Swift에서 `Copyable`을 자동으로 **채택하지 않도록 억누른다**�
 
 그러므로 `Copyable` 제약이 없는 `~Copyable` 또한 채택 가능하고 그보다 좁은 `Copyable` 제약을 구현한 타입들도 `Runnable`을채택할 수 있다.
 
-![스크린샷 2025-02-06 19.23.38.png](./Images/스크린샷_2025-02-06_19.23.38.png)
+<img src="./Images/스크린샷_2025-02-06_19.23.38.png" width="70%">
 
 위의 상태에서 `BankTransfer`가 `Runnable`을 채택하면, `Runnable` 제약을 따르면서 `Copyable`은 따르지 않으므로, 위 그림처럼 표현된다.
 
-![스크린샷 2025-02-06 19.25.47.png](./Images/스크린샷_2025-02-06_19.25.47.png)
+<img src="./Images/스크린샷_2025-02-06_19.25.47.png" width="70%">
 
 여기서 `execute`를 살펴보자, 타입 T의 제약조건을 `Runnable`하되, `Copyable`을 **채택하지 않아도 된다**고 했으므로 보라색으로 포함된 원에 해당하는 모든 타입이 활용할 수 있다.
 
@@ -392,7 +392,7 @@ extension Job: Copyable where Action: Copyable { }
 
 따라서 조건부로 하위 타입이 `Copyable`을 준수할 때 자신도 `Copyable`을 준수하도록 작성할 수 있다.
 
-![image.png](./Images/image%2012.png)
+<img src="./Images/image%2012.png" width="70%">
 
 이를 위와 같이 다이어그램으로 표현할 수 있다.
 
