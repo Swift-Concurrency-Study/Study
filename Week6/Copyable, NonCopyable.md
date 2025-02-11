@@ -1,19 +1,21 @@
+# 목차
+
 - [깊은 복사와 얕은 복사](#깊은-복사와-얕은-복사)
   - [깊은 복사](#깊은-복사)
   - [얕은 복사](#얕은-복사)
   - [클래스의 깊은 복사](#클래스의-깊은-복사)
-- [Copyable](#Copyable)
-  - [등장배경](#등장배경)
-  - [Copyable이란](#Copyable이란)
-- [Non-Copyable (aka. Move-Only Type)](#Non-Copyable-(aka.-Move-Only-Type))
-  - [Non-Copyable 사용하기](#Non-Copyable-사용하기)
-    - [소유권 (Ownership)](#소유권-(Ownership))
-    - [1. consume](#1.-consume)
-    - [2. borrow](#2.-borrow)
-    - [3. inout (mutating)](#3.-inout-(mutating))
-    - [NonCopyable의 deinit](#NonCopyable의-deinit)
+- [Copyable](#copyable)
+  - [등장 배경](#등장-배경)
+  - [Copyable이란](#copyable이란)
+- [Non-Copyable (aka. Move-Only Type)](#non-copyable-aka-move-only-type)
+  - [Non-Copyable 사용하기](#non-copyable-사용하기)
+    - [소유권 (Ownership)](#소유권-ownership)
+    - [1. consume](#1-consume)
+    - [2. borrow](#2-borrow)
+    - [3. inout (mutating)](#3-inout-mutating)
+    - [NonCopyable의 deinit](#noncopyable의-deinit)
 - [프로토콜과 제네릭 활용](#프로토콜과-제네릭-활용)
-  - [조건부 Copyable](#조건부-Copyable)
+  - [조건부 Copyable](#조건부-copyable)
 - [동시성과 관계](#동시성과-관계)
 - [참고자료](#참고자료)
 
@@ -98,7 +100,7 @@ CoW (= Copy on Write)
 
 # Copyable
 
-### 등장 배경
+## 등장 배경
 
 우리는 구조체, 열거형, 클래스 등의 형태로 사용자 정의 자료형을 나타낼 수 있다.
 
@@ -119,7 +121,7 @@ CoW (= Copy on Write)
 
 즉, 고유한 값타입을 만들어서 참조 타입의 특성 중 하나인 고유성을 대체하고자 하는 것이다.
 
-### Copyable이란
+## Copyable이란
 
 값타입이 고유할 수 없는 이유가 무엇일까?
 
