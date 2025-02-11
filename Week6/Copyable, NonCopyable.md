@@ -191,7 +191,7 @@ struct A: ~Copyable {
 
 Swift에는 소유권(Ownership)이라는 기본 개념이 있다. 
 
-**값의 소유권(Ownership of Value)**이란 **값의 표현을 관리할 수 있는 책임**을 말한다.
+**값의 소유권(Ownership of Value)** 이란 **값의 표현을 관리할 수 있는 책임**을 말한다.
 
 값 혹은 property를 사용할 때에는 언제나 이 소유권 시스템과 상호작용하며 Swift의 메모리 안전의 핵심이 된다.
 
@@ -309,9 +309,9 @@ NonCopyable은 deinit을 구현할 수 있다.
 
 ```swift
 struct BankTransfer: ~Copyable {
-		consuming func run() {
-				// ...
-		}
+  consuming func run() {
+    // ...
+  }
 }
 ```
 
