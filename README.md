@@ -24,7 +24,8 @@
 | **Week 6** | 얕은 복사 & 깊은 복사 (+ 클래스에서의 깊은 복사) | [활동 링크](https://github.com/Swift-Concurrency-Study/Study/blob/main/Week6/Copyable%2C%20NonCopyable.md#%EA%B9%8A%EC%9D%80-%EB%B3%B5%EC%82%AC%EC%99%80-%EC%96%95%EC%9D%80-%EB%B3%B5%EC%82%AC) |
 |  | Copyable 프로토콜과 ~Copyable | [활동 링크](https://github.com/Swift-Concurrency-Study/Study/blob/main/Week6/Copyable%2C%20NonCopyable.md#copyable) |
 |  | Generic과 Extension에서의  활용 | [활동 링크](https://github.com/Swift-Concurrency-Study/Study/blob/main/Week6/Copyable%2C%20NonCopyable.md#%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C%EA%B3%BC-%EC%A0%9C%EB%84%A4%EB%A6%AD-%ED%99%9C%EC%9A%A9) |
-| **Week 7, 8** | 기록소 프로젝트 코드 리팩토링 | [활동 링크](https://github.com/boostcampwm-2024/iOS10-MemorialHouse) |
+| **Week 7** | 기록소 프로젝트 코드 리팩토링 - 1편 | [활동 링크](https://github.com/boostcampwm-2024/iOS10-MemorialHouse/pull/167) |
+| **Week 8** | 기록소 프로젝트 코드 리팩토링 - 2편 | [활동 링크](https://github.com/boostcampwm-2024/iOS10-MemorialHouse/pull/176) |
 
 <br>
 
